@@ -25,14 +25,14 @@ field_header_pattern = re.compile(r"\[\[ ## (\w+) ## \]\]")
 
 def test_pr(line: str, sections: list[str]):
     '''
-    pre: field_header_pattern.match(line) != None
     post: True
     '''
     match = field_header_pattern.match(line.strip())
-    header = match.group(1)
-    remaining_content = line[match.end():].strip()
-    sections.append((header, [remaining_content] if remaining_content else []))
-    return sections
+    if match:
+        header = match.group(1)
+        remaining_content = line[match.end():].strip()
+        sections.append((header, [remaining_content] if remaining_content else []))
+        return sections
 
 # class FieldInfoWithName(NamedTuple):
 #     name: str
